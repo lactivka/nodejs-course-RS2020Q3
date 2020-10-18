@@ -7,7 +7,6 @@ const getAll = async () => {
 
 const get = async id => {
   const user = await DB.getEntity(TABLE_NAME, id);
-
   if (!user) {
     throw new Error(`Couldn't find a user with id: ${id}`);
   }

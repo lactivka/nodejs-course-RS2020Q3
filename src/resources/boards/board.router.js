@@ -37,7 +37,7 @@ router.route('/').post(async (req, res) => {
 
 router.route('/:id').put(async (req, res) => {
   const board = await boardService.update(req.params.id, {
-    id: req.body.id,
+    id: req.params.id,
     title: req.body.title,
     columns: req.body.columns
   });

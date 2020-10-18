@@ -16,7 +16,6 @@ app.use(express.json());
 app.use(
   morgan(
     (tokens, req, res) => {
-      console.log(req.params);
       return [
         tokens.method(req, res),
         tokens.status(req, res),

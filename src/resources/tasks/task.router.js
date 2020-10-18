@@ -44,7 +44,7 @@ router.route('/').post(async (req, res) => {
 
 router.route('/:id').put(async (req, res) => {
   const task = await taskService.update(req.params.id, {
-    id: req.body.id,
+    id: req.params.id,
     title: req.body.title,
     order: req.body.order,
     description: req.body.description,

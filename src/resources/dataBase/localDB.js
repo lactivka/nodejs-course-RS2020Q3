@@ -80,7 +80,6 @@ const updateEntity = async (tableName, id, entity) => {
   if (oldEntity) {
     dataBase[tableName][dataBase[tableName].indexOf(oldEntity)] = { ...entity };
   }
-
   return getEntity(tableName, id);
 };
 
