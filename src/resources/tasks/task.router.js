@@ -6,7 +6,6 @@ const { logInfo } = require('../../common/logger/winston');
 const errorCatcher = require('../../common/errorCatcher');
 
 router.route('/').get(async (req, res) => {
-  console.log(req.originalUrl);
   const tasks = await taskService.getAll();
   await res.json(tasks);
   logInfo(req, res);

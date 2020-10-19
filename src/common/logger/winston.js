@@ -3,7 +3,7 @@ const winston = require('winston');
 require('winston-daily-rotate-file');
 
 const transport = new winston.transports.DailyRotateFile({
-  filename: `${__dirname}/../../logs/application-%DATE%.log`,
+  filename: 'logs/application-%DATE%.log',
   datePattern: 'DD-MM-YYYY',
   zippedArchive: true,
   maxSize: '20m',
@@ -28,7 +28,7 @@ winston.addColors(colors);
 const options = {
   file: {
     level: 'info',
-    filename: `${__dirname}/../../logs/app.log`,
+    filename: 'logs/info.log',
     handleExceptions: true,
     json: true,
     maxsize: 5242880, // 5MB
@@ -45,7 +45,7 @@ const options = {
   },
   errorFile: {
     level: 'error',
-    filename: `${__dirname}/../../logs/errors.log`,
+    filename: 'logs/errors.log',
     json: true,
     maxsize: 5242880, // 5MB
     maxFiles: 1,
@@ -104,6 +104,7 @@ const logInfo = (req, res) => {
 };
 
 const logError = (req, res, err, logMessage) => {
+  console.log('err message', err, logMessage);
   const log = logMessage
     ? logMessage
     : `${req.method} ${res.statusCode} ${req.url} query: ${JSON.stringify(
@@ -111,5 +112,10 @@ const logError = (req, res, err, logMessage) => {
       )} body: ${JSON.stringify(req.body)} response: ${err.message}`;
   logger.error(log);
 };
+
+// logger.finish = exitCode => {
+//   transport.on('finish', () => process.exit(exitCode));
+//   transport.close();
+// };
 
 module.exports = { logger, logInfo, logError };
