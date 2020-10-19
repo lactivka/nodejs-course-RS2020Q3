@@ -28,7 +28,7 @@ winston.addColors(colors);
 const options = {
   file: {
     level: 'info',
-    filename: 'logs/info.log',
+    filename: 'logs/appLogs.log',
     handleExceptions: true,
     json: true,
     maxsize: 5242880, // 5MB
