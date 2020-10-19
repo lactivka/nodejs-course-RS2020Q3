@@ -104,7 +104,6 @@ const logInfo = (req, res) => {
 };
 
 const logError = (req, res, err, logMessage) => {
-  console.log('err message', err, logMessage);
   const log = logMessage
     ? logMessage
     : `${req.method} ${res.statusCode} ${req.url} query: ${JSON.stringify(
