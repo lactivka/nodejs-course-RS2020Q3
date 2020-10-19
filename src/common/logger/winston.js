@@ -3,7 +3,7 @@ const winston = require('winston');
 require('winston-daily-rotate-file');
 
 const transport = new winston.transports.DailyRotateFile({
-  filename: `${__dirname}/../logs/application-%DATE%.log`,
+  filename: `${__dirname}/../../logs/application-%DATE%.log`,
   datePattern: 'DD-MM-YYYY',
   zippedArchive: true,
   maxSize: '20m',
@@ -28,7 +28,7 @@ winston.addColors(colors);
 const options = {
   file: {
     level: 'info',
-    filename: `${__dirname}/../logs/app.log`,
+    filename: `${__dirname}/../../logs/app.log`,
     handleExceptions: true,
     json: true,
     maxsize: 5242880, // 5MB
@@ -45,7 +45,7 @@ const options = {
   },
   errorFile: {
     level: 'error',
-    filename: `${__dirname}/../logs/errors.log`,
+    filename: `${__dirname}/../../logs/errors.log`,
     json: true,
     maxsize: 5242880, // 5MB
     maxFiles: 1,
@@ -103,12 +103,13 @@ const logInfo = (req, res) => {
   );
 };
 
-const logError = (req, res, err) => {
-  logger.error(
-    `${req.method} ${res.statusCode} ${req.url} query: ${JSON.stringify(
-      req.params
-    )} body: ${JSON.stringify(req.body)} response: ${err.message}`
-  );
+const logError = (req, res, err, logMessage) => {
+  const log = logMessage
+    ? logMessage
+    : `${req.method} ${res.statusCode} ${req.url} query: ${JSON.stringify(
+        req.params
+      )} body: ${JSON.stringify(req.body)} response: ${err.message}`;
+  logger.error(log);
 };
 
 module.exports = { logger, logInfo, logError };
