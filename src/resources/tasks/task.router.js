@@ -2,20 +2,17 @@ const router = require('express').Router();
 const Task = require('./task.model');
 const taskService = require('./task.service');
 const { getAllEntities } = require('../dataBase/localDB');
-const { logInfo } = require('../../common/logger/winston');
 const errorCatcher = require('../../common/errorCatcher');
 
 router.route('/').get(async (req, res) => {
   const tasks = await taskService.getAll();
   await res.json(tasks);
-  logInfo(req, res);
 });
 
 router.route('/:id').get(
   errorCatcher(async (req, res) => {
     const task = await taskService.get(req.params.id);
     await res.status(200).json(task);
-    logInfo(req, res);
   })
 );
 
@@ -23,7 +20,6 @@ router.route('/:id').delete(
   errorCatcher(async (req, res) => {
     await taskService.remove(req.params.id);
     res.sendStatus(200);
-    logInfo(req, res);
   })
 );
 
@@ -42,7 +38,6 @@ router.route('/').post(
       })
     );
     res.status(200).send(task);
-    logInfo(req, res);
   })
 );
 
@@ -59,7 +54,6 @@ router.route('/:id').put(
     });
 
     res.status(200).send(task);
-    logInfo(req, res);
   })
 );
 

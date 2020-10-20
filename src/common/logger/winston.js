@@ -62,6 +62,7 @@ const options = {
   console: {
     level: 'debug',
     handleExceptions: true,
+    handleRejections: true,
     json: false,
     colorize: true,
     format: winston.format.combine(
@@ -95,12 +96,13 @@ logger.stream = {
   }
 };
 
-const logInfo = (req, res) => {
+const logInfo = (req, res, next) => {
   logger.info(
     `${req.method} ${res.statusCode} ${req.url} query: ${JSON.stringify(
       req.params
     )} body: ${JSON.stringify(req.body)}`
   );
+  next();
 };
 
 const logError = (req, res, err, logMessage) => {
@@ -112,9 +114,10 @@ const logError = (req, res, err, logMessage) => {
   logger.error(log);
 };
 
-// logger.finish = exitCode => {
-//   transport.on('finish', () => process.exit(exitCode));
-//   transport.close();
-// };
+logger.finish = exitCode => {
+  // eslint-disable-next-line no-process-exit
+  transport.on('finish', () => process.exit(exitCode));
+  transport.close();
+};
 
 module.exports = { logger, logInfo, logError };
