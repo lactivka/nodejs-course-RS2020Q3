@@ -96,21 +96,18 @@ logger.stream = {
   }
 };
 
+const getInfo = (req, res) =>
+  `${req.method} ${res.statusCode} ${req.protocol}://${req.get('host')}${
+    req.originalUrl
+  } query: ${JSON.stringify(req.query)} body: ${JSON.stringify(req.body)}`;
+
 const logInfo = (req, res, next) => {
-  logger.info(
-    `${req.method} ${res.statusCode} ${req.url} query: ${JSON.stringify(
-      req.params
-    )} body: ${JSON.stringify(req.body)}`
-  );
+  logger.info(getInfo(req, res));
   next();
 };
 
 const logError = (req, res, err, logMessage) => {
-  const log = logMessage
-    ? logMessage
-    : `${req.method} ${res.statusCode} ${req.url} query: ${JSON.stringify(
-        req.params
-      )} body: ${JSON.stringify(req.body)} response: ${err.message}`;
+  const log = logMessage ? logMessage : getInfo(req, res);
   logger.error(log);
 };
 
