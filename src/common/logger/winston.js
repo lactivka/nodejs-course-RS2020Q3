@@ -96,10 +96,12 @@ logger.stream = {
   }
 };
 
-const getInfo = (req, res) =>
+const getInfo = (req, res, err) =>
   `${req.method} ${res.statusCode} ${req.protocol}://${req.get('host')}${
     req.originalUrl
-  } query: ${JSON.stringify(req.query)} body: ${JSON.stringify(req.body)}`;
+  } query: ${JSON.stringify(req.query)} body: ${JSON.stringify(req.body)} ${
+    err ? `message: ${err.message}` : ''
+  }`;
 
 const logInfo = (req, res, next) => {
   logger.info(getInfo(req, res));
@@ -107,7 +109,7 @@ const logInfo = (req, res, next) => {
 };
 
 const logError = (req, res, err, logMessage) => {
-  const log = logMessage ? logMessage : getInfo(req, res);
+  const log = logMessage ? logMessage : getInfo(req, res, err);
   logger.error(log);
 };
 

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const errorCatcher = require('../../common/errorCatcher');
+const errorCatcher = require('../../common/errors/errorCatcher');
 const User = require('./user.model');
 const userService = require('./user.service');
 
@@ -7,7 +7,7 @@ router.route('/').get(
   errorCatcher(async (req, res) => {
     const users = await userService.getAll();
     // map user fields to exclude secret fields like "password"
-    await res.json(users.map(User.toResponse));
+    await res.json(users);
   })
 );
 

@@ -1,4 +1,4 @@
-const usersRepo = require('./user.memory.repository');
+const usersRepo = require('./user.DB.repository');
 const User = require('./user.model');
 
 const getAll = () => usersRepo.getAll();

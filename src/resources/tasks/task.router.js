@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Task = require('./task.model');
 const taskService = require('./task.service');
 const { getAllEntities } = require('../dataBase/localDB');
-const errorCatcher = require('../../common/errorCatcher');
+const errorCatcher = require('../../common/errors/errorCatcher');
 
 router.route('/').get(async (req, res) => {
   const tasks = await taskService.getAll();
