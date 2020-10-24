@@ -1,11 +1,21 @@
-const uuid = require('uuid');
+// const uuid = require('uuid');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-class Board {
-  constructor({ id = uuid(), title = 'BOARD', columns = [] } = {}) {
-    this.id = id;
-    this.title = title;
-    this.columns = columns;
-  }
-}
+const Board = new Schema(
+  {
+    title: String,
+    columns: []
+  },
+  { collection: 'boards' }
+);
+
+// class Board {
+//   constructor({ id = uuid(), title = 'BOARD', columns = [] } = {}) {
+//     this.id = id;
+//     this.title = title;
+//     this.columns = columns;
+//   }
+// }
 
 module.exports = Board;

@@ -1,13 +1,13 @@
 const router = require('express').Router();
+const { toResponse } = require('./user.model');
 const errorCatcher = require('../../common/errors/errorCatcher');
-const { User, toResponse } = require('./user.model');
 const userService = require('./user.service');
 
 router.route('/').get(
   errorCatcher(async (req, res) => {
     const users = await userService.getAll();
     // map user fields to exclude secret fields like "password"
-    await res.json(users.map(toResponse));
+    await res.status(200).json(users.map(toResponse));
   })
 );
 
@@ -27,13 +27,7 @@ router.route('/:id').delete(
 
 router.route('/').post(
   errorCatcher(async (req, res) => {
-    const user = await userService.save(
-      new User({
-        login: req.body.login,
-        password: req.body.password,
-        name: req.body.name
-      })
-    );
+    const user = await userService.save(req.body);
     res.status(200).send(toResponse(user));
   })
 );

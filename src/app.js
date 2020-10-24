@@ -8,6 +8,9 @@ const taskRouter = require('./resources/tasks/task.router');
 const errorHandler = require('./common/errors/errorHandler');
 const { logError, logInfo } = require('./common/logger/winston');
 const finish = require('./common/logger/winston').logger.finish;
+const createError = require('http-errors');
+const { NOT_FOUND } = require('http-status-codes');
+
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
@@ -30,6 +33,8 @@ app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 
 boardRouter.use('/:boardId/tasks', taskRouter);
+
+app.use((req, res, next) => next(createError(NOT_FOUND)));
 
 process.on('unhandledRejection', error => {
   logError(null, null, null, `Unhandled rejection detected: ${error.message}`);

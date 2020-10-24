@@ -1,8 +1,7 @@
-const { ValidationError, NotFoundError } = require('./customErrors');
 const { logError } = require('../logger/winston');
 
 const errorHandler = (err, req, res, next) => {
-  if (err instanceof ValidationError || err instanceof NotFoundError) {
+  if (err.status) {
     res.sendStatus(err.status);
   } else {
     res.sendStatus(500);
