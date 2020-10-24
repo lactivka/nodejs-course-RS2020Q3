@@ -1,20 +1,20 @@
 const router = require('express').Router();
 const errorCatcher = require('../../common/errors/errorCatcher');
-const User = require('./user.model');
+const { User, toResponse } = require('./user.model');
 const userService = require('./user.service');
 
 router.route('/').get(
   errorCatcher(async (req, res) => {
     const users = await userService.getAll();
     // map user fields to exclude secret fields like "password"
-    await res.json(users);
+    await res.json(users.map(toResponse));
   })
 );
 
 router.route('/:id').get(
   errorCatcher(async (req, res) => {
     const user = await userService.get(req.params.id);
-    res.status(200).send(User.toResponse(user));
+    res.status(200).send(toResponse(user));
   })
 );
 
@@ -34,7 +34,7 @@ router.route('/').post(
         name: req.body.name
       })
     );
-    res.status(200).send(User.toResponse(user));
+    res.status(200).send(toResponse(user));
   })
 );
 
@@ -47,7 +47,7 @@ router.route('/:id').put(
       name: req.body.name
     });
 
-    res.status(200).send(User.toResponse(user));
+    res.status(200).send(toResponse(user));
   })
 );
 

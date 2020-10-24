@@ -8,8 +8,13 @@ const User = new Schema(
     login: String,
     password: String
   },
-  { collation: 'users' }
+  { collection: 'users' }
 );
+
+const toResponse = user => {
+  const { id, name, login } = user;
+  return { id, name, login };
+};
 
 // class User {
 //   constructor({
@@ -30,4 +35,7 @@ const User = new Schema(
 //   }
 // }
 
-module.exports = mongoose.model('users', User);
+module.exports = {
+  User: mongoose.model('users', User),
+  toResponse
+};
