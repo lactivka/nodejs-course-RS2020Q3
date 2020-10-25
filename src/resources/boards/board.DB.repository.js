@@ -1,16 +1,16 @@
+const { Board } = require('./board.model');
 const {
   // ValidationError,
   NotFoundError
 } = require('../../common/errors/customErrors');
-const DB = require('../dataBase/localDB');
-const TABLE_NAME = 'Boards';
+const taskService = require('../tasks/task.service');
 
-const getAll = async () => {
-  return DB.getAllEntities(TABLE_NAME);
-};
+const getAll = async () => await Board.find({});
+
+const save = async board => await Board.create(board);
 
 const get = async id => {
-  const board = await DB.getEntity(TABLE_NAME, id);
+  const board = await Board.findById(id);
   if (!board) {
     throw new NotFoundError(`Couldn't find a board with id: ${id}`);
   }
@@ -18,23 +18,19 @@ const get = async id => {
   return board;
 };
 
-const remove = async id => {
-  if (!(await DB.removeEntity(TABLE_NAME, id))) {
-    throw new NotFoundError(`Couldn't find a board with id: ${id}`);
-  }
-};
-
-const save = async board => {
-  return DB.saveEntity(TABLE_NAME, board);
-};
-
 const update = async (id, board) => {
-  const entity = await DB.updateEntity(TABLE_NAME, id, board);
-  if (!entity) {
+  await Board.updateOne({ _id: id }, board);
+  return get(id);
+};
+
+const remove = async id => {
+  const board = await Board.findById(id);
+  if (!board) {
     throw new NotFoundError(`Couldn't find a board with id: ${id}`);
   }
-
-  return entity;
+  await taskService.deleteBoardTasks(id);
+  await Board.deleteOne({ _id: id });
+  return board;
 };
 
 module.exports = { getAll, get, remove, save, update };

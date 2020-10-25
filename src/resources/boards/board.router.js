@@ -1,50 +1,41 @@
 const router = require('express').Router();
 const errorCatcher = require('../../common/errors/errorCatcher');
-const Board = require('./board.model');
 const boardService = require('./board.service');
+const { OK, NO_CONTENT } = require('http-status-codes');
+const { toResponse } = require('./board.model');
 
 router.route('/').get(
   errorCatcher(async (req, res) => {
     const boards = await boardService.getAll();
-    await res.json(boards);
+    await res.status(OK).json(boards.map(toResponse));
   })
 );
 
 router.route('/:id').get(
   errorCatcher(async (req, res) => {
     const board = await boardService.get(req.params.id);
-    res.status(200).send(board);
+    res.status(OK).send(toResponse(board));
   })
 );
 
 router.route('/:id').delete(
   errorCatcher(async (req, res) => {
     await boardService.remove(req.params.id);
-    res.sendStatus(204);
+    res.sendStatus(NO_CONTENT);
   })
 );
 
 router.route('/').post(
   errorCatcher(async (req, res) => {
-    const board = await boardService.save(
-      new Board({
-        title: req.body.title,
-        columns: req.body.columns
-      })
-    );
-    res.status(200).send(board);
+    const board = await boardService.save(req.body);
+    res.status(OK).send(toResponse(board));
   })
 );
 
 router.route('/:id').put(
   errorCatcher(async (req, res) => {
-    const board = await boardService.update(req.params.id, {
-      id: req.params.id,
-      title: req.body.title,
-      columns: req.body.columns
-    });
-
-    res.status(200).send(board);
+    const board = await boardService.update(req.params.id, req.body);
+    res.status(OK).send(toResponse(board));
   })
 );
 

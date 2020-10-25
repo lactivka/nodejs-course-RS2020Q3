@@ -20,3 +20,5 @@ db.on('error', () =>
     logger.info(`App is running on http://localhost:${PORT}`)
   );
 });
+
+// db.dropDatabase();
