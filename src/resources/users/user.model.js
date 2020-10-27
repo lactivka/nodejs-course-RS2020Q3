@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-// const uuid = require('uuid');
 
 const User = new Schema(
   {
@@ -21,7 +20,7 @@ const User = new Schema(
       match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_@$!%*?&])[A-Za-z\d_@$!%*?&]{8,}$/
     }
   },
-  { collection: 'users' }
+  { collection: 'users', versionKey: false }
 );
 
 const toResponse = user => {
