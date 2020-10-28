@@ -1,5 +1,4 @@
-const boardRepo = require('./board.memory.repository');
-const Board = require('./board.model');
+const boardRepo = require('./board.DB.repository');
 
 const getAll = () => boardRepo.getAll();
 
@@ -7,9 +6,7 @@ const get = id => boardRepo.get(id);
 
 const remove = id => boardRepo.remove(id);
 
-const save = board => {
-  return boardRepo.save(new Board(board));
-};
+const save = board => boardRepo.save(board);
 
 const update = (id, board) => boardRepo.update(id, board);
 

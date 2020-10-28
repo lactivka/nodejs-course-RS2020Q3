@@ -1,6 +1,6 @@
-const User = require('../users/user.model');
-const Task = require('../tasks/task.model');
-const Board = require('../boards/board.model');
+// const User = require('../users/user.model');
+// const Task = require('../tasks/task.model');
+// const Board = require('../boards/board.model');
 
 const dataBase = {
   Users: [],
@@ -23,17 +23,17 @@ const dataBase = {
   fixTasksStructure: () => {}
 };
 
-(() => {
-  for (let i = 0; i < 3; i += 1) {
-    dataBase.Users.push(new User());
-  }
-  const board = new Board();
-  dataBase.Boards.push(board);
-  dataBase.Tasks.push(
-    new Task({ boardId: board.id }),
-    new Task({ boardId: board.id })
-  );
-})();
+// (() => {
+//   for (let i = 0; i < 3; i += 1) {
+//     dataBase.Users.push(new User());
+//   }
+//   const board = new Board();
+//   dataBase.Boards.push(board);
+//   dataBase.Tasks.push(
+//     new Task({ boardId: board.id }),
+//     new Task({ boardId: board.id })
+//   );
+// })();
 
 const getAllEntities = tableName => {
   return dataBase[tableName].filter(entity => entity);

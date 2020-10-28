@@ -1,4 +1,7 @@
-const { ValidationError, NotFoundError } = require('../../common/customErrors');
+const {
+  ValidationError,
+  NotFoundError
+} = require('../../common/errors/customErrors');
 const DB = require('../dataBase/localDB');
 const TABLE_NAME = 'Users';
 
