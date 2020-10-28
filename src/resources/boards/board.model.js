@@ -4,14 +4,27 @@ const { Schema } = mongoose;
 
 const Board = new Schema(
   {
-    title: String,
-    columns: [],
+    title: {
+      type: String,
+      minlength: [3, 'Too short title'],
+      maxlength: 30,
+      required: [true, 'Type task title']
+    },
+    columns: {
+      type: [
+        {
+          title: String,
+          order: Number
+        }
+      ],
+      required: [true, 'Type board columns list']
+    },
     _id: {
       type: String,
       default: uuid
     }
   },
-  { collection: 'boards' }
+  { collection: 'boards', versionKey: false }
 );
 
 const toResponse = board => {
