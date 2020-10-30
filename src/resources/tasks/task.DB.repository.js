@@ -38,7 +38,7 @@ const update = async (body, id, boardId) => {
   if (!task) {
     throw new NotFoundError(`Couldn't find a task with id: ${id}`);
   }
-  await Task.findOneAndUpdate({ _id: id, boardId }, body);
+  await Task.findOneAndUpdate({ _id: id, boardId }, { ...body, boardId });
   return get(id, boardId);
 };
 

@@ -10,8 +10,7 @@ const save = (boardId, task) => {
   return tasksRepo.save(boardId, task);
 };
 
-const update = (boardId, id, task) => tasksRepo.update(boardId, id, task);
-
+const update = (task, id, boardId) => tasksRepo.update(task, id, boardId);
 const deleteUserTasks = userId => tasksRepo.deleteUserTasks(userId);
 
 const deleteBoardTasks = boardId => tasksRepo.deleteBoardTasks(boardId);
