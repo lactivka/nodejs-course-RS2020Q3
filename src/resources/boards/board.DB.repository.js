@@ -1,6 +1,5 @@
 const { Board } = require('./board.model');
 const {
-  // ValidationError,
   NotValidError,
   NotFoundError
 } = require('../../common/errors/customErrors');

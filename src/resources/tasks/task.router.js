@@ -4,10 +4,12 @@ const taskService = require('./task.service');
 const errorCatcher = require('../../common/errors/errorCatcher');
 const { OK, NO_CONTENT } = require('http-status-codes');
 
-router.route('/').get(async (req, res) => {
-  const tasks = await taskService.getAll(req.params.boardId);
-  res.status(OK).json(tasks.map(toResponse));
-});
+router.route('/').get(
+  errorCatcher(async (req, res) => {
+    const tasks = await taskService.getAll(req.params.boardId);
+    res.status(OK).json(tasks.map(toResponse));
+  })
+);
 
 router.route('/:id').get(
   errorCatcher(async (req, res) => {
