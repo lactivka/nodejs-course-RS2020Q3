@@ -2,10 +2,19 @@ const { User } = require('./user.model');
 const taskService = require('../tasks/task.service');
 const checkID = require('../../common/validation/checkId');
 const { NotFoundError } = require('../../common/errors/customErrors');
+const { hashPassword } = require('../../common/hashHelper/hasher');
 
 const getAll = async () => User.find({});
 
-const save = async user => User.create(user);
+const save = async user => {
+  const { password } = user;
+  const hashedPassword = await hashPassword(password);
+  const newUser = {
+    ...user,
+    password: hashedPassword
+  };
+  return User.create(newUser);
+};
 
 const get = async id => {
   await checkID(id);
