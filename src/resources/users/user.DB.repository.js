@@ -16,7 +16,7 @@ const save = async user => {
   return User.create(newUser);
 };
 
-const get = async id => {
+const getById = async id => {
   await checkID(id);
   const user = await User.findById(id);
   if (!user) {
@@ -25,11 +25,19 @@ const get = async id => {
   return user;
 };
 
+const getByProps = async props => await User.find(props);
+
 const update = async (id, user) => {
   await checkID(id);
   await User.validate(user, ['name', 'login', 'password']);
-  await User.updateOne({ _id: id }, user);
-  return get(id);
+  const { password } = user;
+  const hashedPassword = await hashPassword(password);
+  const newUser = {
+    ...user,
+    password: hashedPassword
+  };
+  await User.updateOne({ _id: id }, newUser);
+  return getById(id);
 };
 
 const remove = async id => {
@@ -42,4 +50,4 @@ const remove = async id => {
   const deletedUser = await User.deleteOne({ _id: id });
   return { handledTasks, deletedUser };
 };
-module.exports = { getAll, save, get, remove, update };
+module.exports = { getAll, save, getById, getByProps, remove, update };

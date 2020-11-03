@@ -1,4 +1,10 @@
-const { BAD_REQUEST, NOT_FOUND, getStatusText } = require('http-status-codes');
+const {
+  BAD_REQUEST,
+  NOT_FOUND,
+  FORBIDDEN,
+  UNAUTHORIZED,
+  getStatusText
+} = require('http-status-codes');
 class NotValidError extends Error {
   constructor(message) {
     super(message);
@@ -16,4 +22,27 @@ class NotFoundError extends Error {
   }
 }
 
-module.exports = { NotValidError, NotFoundError };
+class ForbiddenError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'Forbidden error';
+    this.status = FORBIDDEN;
+    this.text = getStatusText(this.status);
+  }
+}
+
+class UnauthorizedError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'Unauthorized error';
+    this.status = UNAUTHORIZED;
+    this.text = getStatusText(this.status);
+  }
+}
+
+module.exports = {
+  NotValidError,
+  NotFoundError,
+  ForbiddenError,
+  UnauthorizedError
+};

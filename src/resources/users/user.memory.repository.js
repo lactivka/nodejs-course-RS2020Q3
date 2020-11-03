@@ -9,7 +9,7 @@ const getAll = async () => {
   return DB.getAllEntities(TABLE_NAME);
 };
 
-const get = async id => {
+const getById = async id => {
   if (!id) {
     throw new ValidationError("User id wasn't passed");
   }
@@ -53,4 +53,4 @@ const update = async (id, user) => {
   return entity;
 };
 
-module.exports = { getAll, get, remove, save, update };
+module.exports = { getAll, getById, remove, save, update };
