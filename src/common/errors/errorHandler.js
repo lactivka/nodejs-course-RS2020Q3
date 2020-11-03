@@ -9,7 +9,6 @@ const {
 const { BAD_REQUEST } = require('http-status-codes');
 
 const errorHandler = (err, req, res, next) => {
-  // console.log('error in handler', err);
   if (
     err instanceof ValidationError ||
     err instanceof NotFoundError ||

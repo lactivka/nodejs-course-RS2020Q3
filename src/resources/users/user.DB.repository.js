@@ -27,6 +27,12 @@ const getById = async id => {
 
 const getByProps = async props => await User.find(props);
 
+const saveAdminUser = async user => {
+  const { name, login } = user;
+  const users = await getByProps({ name, login });
+  if (users.length < 1) await save(user);
+};
+
 const update = async (id, user) => {
   await checkID(id);
   await User.validate(user, ['name', 'login', 'password']);
@@ -50,4 +56,12 @@ const remove = async id => {
   const deletedUser = await User.deleteOne({ _id: id });
   return { handledTasks, deletedUser };
 };
-module.exports = { getAll, save, getById, getByProps, remove, update };
+module.exports = {
+  getAll,
+  save,
+  getById,
+  getByProps,
+  remove,
+  update,
+  saveAdminUser
+};

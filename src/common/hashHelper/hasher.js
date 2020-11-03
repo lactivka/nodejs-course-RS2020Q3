@@ -9,12 +9,7 @@ const hashPassword = async password => {
 };
 
 const checkHashedPassword = async (password, hash) => {
-  try {
-    return await bcrypt.compare(password, hash);
-  } catch (err) {
-    console.log('err in hash checker');
-    console.log(err);
-  }
+  return await bcrypt.compare(password, hash);
 };
 
 module.exports = {

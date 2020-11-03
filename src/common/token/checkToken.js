@@ -4,8 +4,6 @@ const { UnauthorizedError } = require('../errors/customErrors');
 
 module.exports = (req, res, next) => {
   const authHeader = req.header('Authorization');
-  console.log('authHeader is');
-  console.log(authHeader);
   if (authHeader !== undefined) {
     const tokenString = req.header('Authorization');
 

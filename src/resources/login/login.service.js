@@ -7,7 +7,6 @@ const { ForbiddenError } = require('../../common/errors/customErrors');
 const signToken = async (userLogin, password) => {
   const users = await usersRepo.getByProps({ login: userLogin });
   const user = users[0];
-  console.log('User is', user);
 
   if (!user) {
     throw new ForbiddenError('Wrong login or password');
@@ -18,8 +17,6 @@ const signToken = async (userLogin, password) => {
   if (comparisonRes) {
     const { id, login } = user;
     const token = jwt.sign({ id, login }, JWT_SECRET_KEY);
-    console.log('token is');
-    console.log(token);
     return token;
   }
 
