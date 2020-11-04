@@ -14,7 +14,7 @@ router.route('/').get(
 
 router.route('/:id').get(
   errorCatcher(async (req, res) => {
-    const userEntity = await userService.get(req.params.id);
+    const userEntity = await userService.getById(req.params.id);
     res.status(OK).send(toResponse(userEntity));
   })
 );

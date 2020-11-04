@@ -17,7 +17,10 @@ const User = new Schema(
     },
     password: {
       type: String,
-      match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_@$!%*?&])[A-Za-z\d_@$!%*?&]{8,}$/
+      minlength: 5
+
+      // in educational reasons the verification is simplified
+      // match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_@$!%*?&])[A-Za-z\d_@$!%*?&]{8,}$/
     }
   },
   { collection: 'users', versionKey: false }
