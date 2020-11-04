@@ -1,5 +1,5 @@
 const { BAD_REQUEST, NOT_FOUND, getStatusText } = require('http-status-codes');
-class ValidationError extends Error {
+class NotValidError extends Error {
   constructor(message) {
     super(message);
     this.name = 'validation error';
@@ -16,4 +16,4 @@ class NotFoundError extends Error {
   }
 }
 
-module.exports = { ValidationError, NotFoundError };
+module.exports = { NotValidError, NotFoundError };

@@ -14,8 +14,8 @@ router.route('/').get(
 
 router.route('/:id').get(
   errorCatcher(async (req, res) => {
-    const user = await userService.get(req.params.id);
-    res.status(OK).send(toResponse(user));
+    const userEntity = await userService.get(req.params.id);
+    res.status(OK).send(toResponse(userEntity));
   })
 );
 
@@ -28,15 +28,15 @@ router.route('/:id').delete(
 
 router.route('/').post(
   errorCatcher(async (req, res) => {
-    const user = await userService.save(req.body);
-    res.status(OK).send(toResponse(user));
+    const userEntity = await userService.save(req.body);
+    res.status(OK).send(toResponse(userEntity));
   })
 );
 
 router.route('/:id').put(
   errorCatcher(async (req, res) => {
-    const user = await userService.update(req.params.id, req.body);
-    res.status(OK).send(toResponse(user));
+    const userEntity = await userService.update(req.params.id, req.body);
+    res.status(OK).send(toResponse(userEntity));
   })
 );
 

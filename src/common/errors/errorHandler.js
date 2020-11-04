@@ -1,10 +1,16 @@
+const ValidationError = require('mongoose/lib/error/validation');
 const { logError } = require('../logger/winston');
+const { NotFoundError, NotValidError } = require('./customErrors');
+const { BAD_REQUEST } = require('http-status-codes');
 
 const errorHandler = (err, req, res, next) => {
-  if (err.status) {
-    res.sendStatus(err.status);
+  if (
+    err instanceof ValidationError ||
+    err instanceof NotFoundError ||
+    err instanceof NotValidError
+  ) {
+    res.sendStatus(err.status || BAD_REQUEST);
   } else {
-    console.log('error in db', err);
     res.sendStatus(500);
   }
   logError(req, res, err);

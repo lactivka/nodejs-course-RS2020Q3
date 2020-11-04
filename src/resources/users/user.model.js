@@ -1,14 +1,26 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-// const uuid = require('uuid');
 
 const User = new Schema(
   {
-    name: String,
-    login: String,
-    password: String
+    name: {
+      type: String,
+      minlength: [3, 'Too short name'],
+      maxlength: 30,
+      required: [true, 'Type user name']
+    },
+    login: {
+      type: String,
+      minlength: [3, 'Too short login'],
+      maxlength: 30,
+      required: [true, 'Type user login']
+    },
+    password: {
+      type: String,
+      match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_@$!%*?&])[A-Za-z\d_@$!%*?&]{8,}$/
+    }
   },
-  { collection: 'users' }
+  { collection: 'users', versionKey: false }
 );
 
 const toResponse = user => {

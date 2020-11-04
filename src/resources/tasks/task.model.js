@@ -6,20 +6,28 @@ const Task = new Schema(
   {
     title: {
       type: String,
-      required: true
+      minlength: [3, 'Too short task title'],
+      maxlength: 30,
+      required: [true, 'Type task title']
     },
-    order: Number,
+    order: {
+      type: Number,
+      min: [0, "Order can't be negative"],
+      required: [true, 'Type task order']
+    },
     description: String,
     userId: String,
-    boardId: String,
+    boardId: {
+      type: String,
+      required: [true, 'Type task board ID']
+    },
     columnId: String,
     _id: {
       type: String,
       default: uuid
     }
   },
-  { collection: 'tasks' },
-  { versionKey: false }
+  { collection: 'tasks', versionKey: false }
 );
 
 const toResponse = task => {
